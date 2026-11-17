@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>리리 사이트 모음</title>
-<meta name="description" content="업무 · 공부 · 놀이 사이트 5개를 한곳에서, 눌러서 바로 가 보세요">
+<meta name="description" content="업무 · 공부 · 놀이 사이트들을 한곳에서, 눌러서 바로 가 보세요">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bborami.github.io/sites/">
 <meta property="og:title" content="리리 사이트 모음">
-<meta property="og:description" content="업무 · 공부 · 놀이 사이트 5개를 한곳에서, 눌러서 바로 가 보세요">
+<meta property="og:description" content="업무 · 공부 · 놀이 사이트들을 한곳에서, 눌러서 바로 가 보세요">
 <meta property="og:image" content="https://bborami.github.io/sites/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -21,7 +21,7 @@
 <style>
   :root{
     --bg:#0f1115; --fg:#f4f5f7; --muted:#a3a8b3; --line:rgba(255,255,255,.12);
-    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff;
+    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff; --c6:#ff6fae;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;background:var(--bg);color:var(--fg);
@@ -55,7 +55,7 @@
   .hero h1{font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
   .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p.lead{margin-top:14px;color:var(--muted);font-size:clamp(15px,1.6vw,18px)}
-  .grid{margin-top:44px;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .grid{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .card{display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:20px;
     background:rgba(255,255,255,.04);border:1px solid var(--line);transition:transform .25s,border-color .25s,background .25s}
   .card:hover{transform:translateY(-6px);border-color:var(--accent);background:rgba(255,255,255,.07)}
@@ -103,10 +103,7 @@
   .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
   /* 반응형 */
-  @media (max-width:1200px){
-    .grid{grid-template-columns:repeat(3,1fr)}
-  }
-  @media (max-width:1000px){
+    @media (max-width:1000px){
     .grid{grid-template-columns:repeat(2,1fr)}
     .site{grid-template-columns:1fr;gap:28px}
     .mock{display:none}
@@ -146,29 +143,35 @@
           <p>보험사별 모니터링 번호와 무이자 할부 정보를 한곳에서</p>
           <div class="row"><button data-go="1">자세히</button><a class="go" href="https://bborami.github.io/monitoring/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
+        <div class="card" style="--accent:var(--c6)">
+          <div class="ico">🪪</div>
+          <h3>디지털 명함</h3>
+          <p>입력만 하면 완성되는 온라인 명함, 링크로 카톡 공유까지</p>
+          <div class="row"><button data-go="2">자세히</button><a class="go" href="https://bborami.github.io/BusinessCard/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
         <div class="card" style="--accent:var(--c5)">
           <div class="ico">🤖</div>
           <h3>AI 프롬프트 연습장</h3>
           <p>네 칸만 채우면 AI에게 보낼 부탁 글이 완성돼요</p>
-          <div class="row"><button data-go="2">자세히</button><a class="go" href="https://bborami.github.io/fp-prompt-lab/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="3">자세히</button><a class="go" href="https://bborami.github.io/fp-prompt-lab/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
         <div class="card" style="--accent:var(--c3)">
           <div class="ico">🔥</div>
           <h3>집킴</h3>
           <p>우리 집 가입금액 계산부터 보험료 비교까지, 화재보험 가이드</p>
-          <div class="row"><button data-go="3">자세히</button><a class="go" href="https://jipkim.vercel.app/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="4">자세히</button><a class="go" href="https://jipkim.vercel.app/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
         <div class="card" style="--accent:var(--c4)">
           <div class="ico">🏝️</div>
           <h3>보험 퀘스트 섬</h3>
           <p>게임처럼 깨는 보험 자격시험 공부 (내부 교육용)</p>
-          <div class="row"><button data-go="4">자세히</button><a class="go" href="https://bborami.github.io/variable-quest-island/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="5">자세히</button><a class="go" href="https://bborami.github.io/variable-quest-island/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
         <div class="card" style="--accent:var(--c2)">
           <div class="ico">🏢</div>
           <h3>총무 오피스</h3>
           <p>지금 다들 뭐 하는지 3D 사무실에서 한눈에</p>
-          <div class="row"><button data-go="5">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="6">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
       </div>
     </div>
@@ -206,11 +209,45 @@
     </div>
   </section>
 
-  <!-- 3. AI 프롬프트 연습장 -->
+  <!-- 3. 디지털 명함 -->
+  <section class="page siteview" data-title="디지털 명함" style="--accent:var(--c6)">
+    <div class="inner site">
+      <div>
+        <div class="num">02 · 영업 도구</div>
+        <h2>디지털 명함</h2>
+        <span class="tag">내 디지털 명함 만들기</span>
+        <p class="desc">사진, 이름, 소개, 연락 정보를 입력하면 휴대폰 화면에서 바로 확인하면서 온라인 명함을 만들 수 있어요. 완성된 명함은 링크로 카카오톡이나 문자로 보내면 돼요.</p>
+        <ul class="feat">
+          <li>입력하는 대로 바뀌는 실시간 휴대폰 미리보기</li>
+          <li>사진 · 회사 로고 · 배경색, 보유자격 블록 표시</li>
+          <li>나만의 명함 링크 만들기 · 복사 · 이미지로 저장</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/BusinessCard/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/BusinessCard</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/BusinessCard</b></div>
+        <div class="body">
+          <div class="tile" style="flex-direction:column;align-items:flex-start;gap:6px;padding:20px">
+            <div style="font-size:44px">🧑‍💼</div>
+            <div style="font-size:18px;font-weight:700">이름 · 소개</div>
+            <div class="chips"><span class="on">보유자격</span><span>자격 추가</span></div>
+          </div>
+          <div class="two">
+            <div class="tile">📷 사진 · 로고</div>
+            <div class="tile">🎨 배경색</div>
+          </div>
+          <div class="tile">🔗 내 명함 링크 <small>복사 · 이미지 저장</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. AI 프롬프트 연습장 -->
   <section class="page siteview" data-title="AI 프롬프트 연습장" style="--accent:var(--c5)">
     <div class="inner site">
       <div>
-        <div class="num">02 · AI 활용</div>
+        <div class="num">03 · AI 활용</div>
         <h2>AI 프롬프트 연습장</h2>
         <span class="tag">설계사를 위한 AI 프롬프트 연습</span>
         <p class="desc">역할, 상황, 조건, 형식 네 칸만 채우면 챗GPT나 제미나이에 보낼 부탁 글(프롬프트)이 완성되는 연습장이에요. 상담 준비, 고객 연락, 콘텐츠, 분석 예시 33개로 바로 연습할 수 있어요.</p>
@@ -238,11 +275,11 @@
     </div>
   </section>
 
-  <!-- 4. 집킴 -->
+  <!-- 5. 집킴 -->
   <section class="page siteview" data-title="집킴" style="--accent:var(--c3)">
     <div class="inner site">
       <div>
-        <div class="num">03 · 고객 안내</div>
+        <div class="num">04 · 고객 안내</div>
         <h2>집킴</h2>
         <span class="tag">우리집 화재보험 가이드</span>
         <p class="desc">아파트 화재보험, 얼마로 어떤 담보를 넣어야 할지 알려 주는 가이드예요. 가입금액 계산부터 보험사별 보험료 비교, 가입 전 체크리스트까지 한 번에 볼 수 있어요.</p>
@@ -267,11 +304,11 @@
     </div>
   </section>
 
-  <!-- 5. 보험 퀘스트 섬 -->
+  <!-- 6. 보험 퀘스트 섬 -->
   <section class="page siteview" data-title="보험 퀘스트 섬" style="--accent:var(--c4)">
     <div class="inner site">
       <div>
-        <div class="num">04 · 내부 교육</div>
+        <div class="num">05 · 내부 교육</div>
         <h2>보험 퀘스트 섬</h2>
         <span class="tag">게임처럼 깨는 자격시험 공부</span>
         <p class="desc">변액 · 생명 · 손해보험 자격시험을 퀘스트처럼 풀어 보는 내부 교육용 사이트예요. 모의고사 문제와 해설로 함께 공부할 수 있어요.</p>
@@ -295,11 +332,11 @@
     </div>
   </section>
 
-  <!-- 6. 총무 오피스 -->
+  <!-- 7. 총무 오피스 -->
   <section class="page siteview" data-title="총무 오피스" style="--accent:var(--c2)">
     <div class="inner site">
       <div>
-        <div class="num">05 · 팀 놀이터</div>
+        <div class="num">06 · 팀 놀이터</div>
         <h2>총무 오피스</h2>
         <span class="tag">지금 다들 뭐 하는지 한눈에</span>
         <p class="desc">팀원들의 지금 상태를 3D 사무실로 보여 주는 사이트예요. 상태를 바꾸면 내 캐릭터가 그 구역으로 걸어가요.</p>
