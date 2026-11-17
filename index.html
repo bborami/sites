@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리리 사이트 모음</title>
+<meta name="description" content="직접 만든 사이트들을 한곳에서 소개하고 바로 이동할 수 있는 페이지">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bg:#0f1115; --fg:#f4f5f7; --muted:#a3a8b3; --line:rgba(255,255,255,.12);
+    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--fg);
+    font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:inherit;text-decoration:none}
+
+  /* 풀페이지 스크롤 */
+  .pages{height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  .page{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;
+    display:flex;align-items:center;justify-content:center;padding:64px 88px 64px 48px;overflow:hidden}
+  .page::before{content:"";position:absolute;inset:0;z-index:0;
+    background:radial-gradient(60% 70% at 85% 30%, color-mix(in srgb,var(--accent,#4f8cff) 28%, transparent), transparent 70%),
+               radial-gradient(50% 60% at 10% 90%, color-mix(in srgb,var(--accent,#4f8cff) 14%, transparent), transparent 70%)}
+  .inner{position:relative;z-index:1;width:100%;max-width:1120px}
+
+  /* 우측 도트 인디케이터 */
+  .dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:10;
+    display:flex;flex-direction:column;gap:16px;list-style:none}
+  .dots button{position:relative;display:block;width:12px;height:12px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(255,255,255,.3);transition:all .3s}
+  .dots button:hover{background:rgba(255,255,255,.7)}
+  .dots button.on{background:#fff;transform:scale(1.35);box-shadow:0 0 0 4px rgba(255,255,255,.15)}
+  .dots button span{position:absolute;right:24px;top:50%;transform:translateY(-50%);white-space:nowrap;
+    font-size:13px;font-weight:600;color:#fff;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:6px;
+    opacity:0;pointer-events:none;transition:opacity .2s}
+  .dots button:hover span,.dots button.on span{opacity:1}
+  .dots button.on span{background:transparent;padding-right:0}
+
+  /* 첫 화면: 전체 소개 */
+  .hero h1{font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{margin-top:14px;color:var(--muted);font-size:clamp(15px,1.6vw,18px)}
+  .grid{margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .card{display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:20px;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);transition:transform .25s,border-color .25s,background .25s}
+  .card:hover{transform:translateY(-6px);border-color:var(--accent);background:rgba(255,255,255,.07)}
+  .card .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;
+    background:color-mix(in srgb,var(--accent) 22%, transparent)}
+  .card h3{font-size:19px;font-weight:700}
+  .card p{font-size:14px;color:var(--muted);line-height:1.55;flex:1}
+  .card .row{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600}
+  .card .row a.go{color:var(--accent)}
+  .card .row button{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer}
+  .card .row button:hover{color:var(--fg)}
+  .scroll-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:1;
+    font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px;animation:bob 2s infinite}
+  @keyframes bob{50%{transform:translate(-50%,6px)}}
+
+  /* 사이트 소개 화면 */
+  .site{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .num{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--accent)}
+  .site h2{margin-top:12px;font-size:clamp(34px,5vw,60px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .tag{display:inline-block;margin-top:14px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;
+    background:color-mix(in srgb,var(--accent) 20%, transparent);color:color-mix(in srgb,var(--accent) 70%, white)}
+  .site p.desc{margin-top:20px;font-size:clamp(15px,1.5vw,18px);line-height:1.7;color:#d3d6dc}
+  .feat{margin-top:22px;list-style:none;display:grid;gap:10px}
+  .feat li{display:flex;gap:10px;font-size:15px;color:#c9cdd4;line-height:1.5}
+  .feat li::before{content:"";flex:none;margin-top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .btn{margin-top:32px;display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:14px;
+    background:var(--accent);color:#fff;font-weight:700;font-size:16px;transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -8px var(--accent)}
+  .url{margin-top:12px;font-size:13px;color:var(--muted)}
+
+  /* 미리보기 목업 */
+  .mock{border-radius:18px;overflow:hidden;background:#181b22;border:1px solid var(--line);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+  .mock .bar{display:flex;align-items:center;gap:6px;padding:12px 14px;background:#1f232c;border-bottom:1px solid var(--line)}
+  .mock .bar i{width:10px;height:10px;border-radius:50%;background:#3a3f4b}
+  .mock .bar b{margin-left:10px;flex:1;font-weight:500;font-size:12px;color:var(--muted);background:#151820;padding:5px 10px;border-radius:6px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mock .body{padding:22px;display:grid;gap:12px;min-height:300px}
+  .mock .big{font-size:56px;line-height:1}
+  .tile{padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.05);font-size:14px;display:flex;align-items:center;gap:10px}
+  .tile small{margin-left:auto;color:var(--muted);font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips span{padding:7px 12px;border-radius:999px;font-size:13px;background:rgba(255,255,255,.07)}
+  .chips span.on{background:var(--accent);color:#fff}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  /* 반응형 */
+  @media (max-width:1000px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .site{grid-template-columns:1fr;gap:28px}
+    .mock{display:none}
+  }
+  @media (max-width:640px){
+    .page{padding:40px 48px 40px 22px;align-items:flex-start;padding-top:56px}
+    .grid{grid-template-columns:1fr;gap:10px;margin-top:24px}
+    .card{flex-direction:row;align-items:center;padding:14px 16px;gap:14px}
+    .card p,.card .row button{display:none}
+    .card .ico{width:44px;height:44px;font-size:22px;flex:none}
+    .card h3{font-size:16px;flex:1}
+    .card .row{display:contents}
+    .dots{right:14px;gap:14px}
+    .dots button span{display:none}
+    .page.siteview{align-items:center;padding-top:40px}
+    .feat li{font-size:14px}
+    .scroll-hint{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.pages{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav aria-label="페이지 이동"><ul class="dots" id="dots"></ul></nav>
+
+<main class="pages" id="pages">
+
+  <!-- 1. 전체 소개 -->
+  <section class="page hero" data-title="전체 보기" style="--accent:#4f8cff">
+    <div class="inner">
+      <h1>리리 <em>사이트 모음</em></h1>
+      <p class="lead">업무에 쓰고, 공부하고, 같이 노는 사이트들이에요. 눌러서 바로 가 보세요.</p>
+      <div class="grid">
+        <div class="card" style="--accent:var(--c1)">
+          <div class="ico">📞</div>
+          <h3>완전판매 모니터링</h3>
+          <p>보험사별 모니터링 번호와 무이자 할부 정보를 한곳에서</p>
+          <div class="row"><button data-go="1">자세히</button><a class="go" href="https://bborami.github.io/monitoring/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
+        <div class="card" style="--accent:var(--c3)">
+          <div class="ico">🔥</div>
+          <h3>집킴</h3>
+          <p>우리 집 가입금액 계산부터 보험료 비교까지, 화재보험 가이드</p>
+          <div class="row"><button data-go="2">자세히</button><a class="go" href="https://jipkim.vercel.app/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
+        <div class="card" style="--accent:var(--c4)">
+          <div class="ico">🏝️</div>
+          <h3>보험 퀘스트 섬</h3>
+          <p>게임처럼 깨는 보험 자격시험 공부 (내부 교육용)</p>
+          <div class="row"><button data-go="3">자세히</button><a class="go" href="https://bborami.github.io/variable-quest-island/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
+        <div class="card" style="--accent:var(--c2)">
+          <div class="ico">🏢</div>
+          <h3>총무 오피스</h3>
+          <p>지금 다들 뭐 하는지 3D 사무실에서 한눈에</p>
+          <div class="row"><button data-go="4">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">스크롤해서 하나씩 보기<span>↓</span></div>
+  </section>
+
+  <!-- 2. 완전판매 모니터링 -->
+  <section class="page siteview" data-title="완전판매 모니터링" style="--accent:var(--c1)">
+    <div class="inner site">
+      <div>
+        <div class="num">01 · 업무 도구</div>
+        <h2>완전판매 모니터링</h2>
+        <span class="tag">보험 업무 정보 한곳에</span>
+        <p class="desc">보험사별 완전판매 모니터링 인콜·아웃콜 번호와 링크, 헬프데스크, 보험금 청구 정보를 한곳에서 찾아볼 수 있게 정리한 사이트예요.</p>
+        <ul class="feat">
+          <li>보험사 헬프데스크 안내</li>
+          <li>보험금 청구 팩스와 청구서 바로가기</li>
+          <li>약관 바로가기 안내</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/monitoring/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/monitoring</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/monitoring</b></div>
+        <div class="body">
+          <div class="tile">📞 인콜 · 아웃콜 번호 <small>보험사별</small></div>
+          <div class="tile">🛟 헬프데스크 <small>바로 연결</small></div>
+          <div class="two">
+            <div class="tile">📠 청구 팩스</div>
+            <div class="tile">🧾 청구서</div>
+          </div>
+          <div class="tile">📄 약관 바로가기 <small>보험사별</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 집킴 -->
+  <section class="page siteview" data-title="집킴" style="--accent:var(--c3)">
+    <div class="inner site">
+      <div>
+        <div class="num">02 · 고객 안내</div>
+        <h2>집킴</h2>
+        <span class="tag">우리집 화재보험 가이드</span>
+        <p class="desc">아파트 화재보험, 얼마로 어떤 담보를 넣어야 할지 알려 주는 가이드예요. 가입금액 계산부터 보험사별 보험료 비교, 가입 전 체크리스트까지 한 번에 볼 수 있어요.</p>
+        <ul class="feat">
+          <li>우리 집 계산기: 재조달가액 · 잔존율 · 보험가액 계산</li>
+          <li>자가 · 임대인 · 임차인별 꼭 챙길 담보, 누수 · 배상책임 설명</li>
+          <li>보험사별 보험료 비교표와 아파트 지도</li>
+        </ul>
+        <a class="btn" href="https://jipkim.vercel.app/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">jipkim.vercel.app</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>jipkim.vercel.app</b></div>
+        <div class="body">
+          <div class="tile">🧮 STEP 1 · 우리 집 계산기 <small>가입금액</small></div>
+          <div class="tile">🔥 화재보험 가이드 <small>담보 설명</small></div>
+          <div class="tile">📊 STEP 2 · 보험료 비교 <small>최저가 표시</small></div>
+          <div class="tile">✅ STEP 3 · 가입 전 체크리스트</div>
+          <div class="tile">🗺️ 아파트 지도</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 보험 퀘스트 섬 -->
+  <section class="page siteview" data-title="보험 퀘스트 섬" style="--accent:var(--c4)">
+    <div class="inner site">
+      <div>
+        <div class="num">03 · 내부 교육</div>
+        <h2>보험 퀘스트 섬</h2>
+        <span class="tag">게임처럼 깨는 자격시험 공부</span>
+        <p class="desc">변액 · 생명 · 손해보험 자격시험을 퀘스트처럼 풀어 보는 내부 교육용 사이트예요. 모의고사 문제와 해설로 함께 공부할 수 있어요.</p>
+        <ul class="feat">
+          <li>변액보험 · 생명보험 · 손해보험 과목별 학습</li>
+          <li>모의고사 문제와 해설</li>
+          <li>팀원과 함께 공부하는 내부 교육 자료</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/variable-quest-island/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/variable-quest-island</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/variable-quest-island</b></div>
+        <div class="body">
+          <div class="big">🏝️⚔️📚</div>
+          <div class="tile">📈 변액 퀘스트 <small>QUEST 1</small></div>
+          <div class="tile">❤️ 생명 퀘스트 <small>QUEST 2</small></div>
+          <div class="tile">🛡️ 손해 퀘스트 <small>QUEST 3</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 총무 오피스 -->
+  <section class="page siteview" data-title="총무 오피스" style="--accent:var(--c2)">
+    <div class="inner site">
+      <div>
+        <div class="num">04 · 팀 놀이터</div>
+        <h2>총무 오피스</h2>
+        <span class="tag">지금 다들 뭐 하는지 한눈에</span>
+        <p class="desc">팀원들의 지금 상태를 3D 사무실로 보여 주는 사이트예요. 상태를 바꾸면 내 캐릭터가 그 구역으로 걸어가요.</p>
+        <ul class="feat">
+          <li>업무중 · 탕비실 · 카페 · 화장실 · 옥상 · 월루중 · 연차 상태 선택</li>
+          <li>드래그로 돌려 보는 3D 사무실과 구역별 인원 현황</li>
+          <li>고양이 츄르 주기 · 놀아주기, 해바라기씨 주기</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/riri-playground</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/riri-playground</b></div>
+        <div class="body">
+          <div class="big">🏢🐈🐹</div>
+          <div class="chips">
+            <span class="on">💻 업무중</span><span>☕ 탕비실</span><span>🧋 카페</span><span>🚻 화장실</span><span>🌇 옥상</span><span>🫠 월루중</span><span>🌴 연차</span>
+          </div>
+          <div class="tile">🕘 09:00 ─────── 18:00 🕕</div>
+          <div class="two">
+            <div class="tile">🐱 츄르 주기</div>
+            <div class="tile">🌻 해바라기씨</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  const box=document.getElementById('pages');
+  const pages=[...document.querySelectorAll('.page')];
+  const dots=document.getElementById('dots');
+  let cur=0;
+
+  pages.forEach((p,i)=>{
+    const li=document.createElement('li');
+    const b=document.createElement('button');
+    b.setAttribute('aria-label',p.dataset.title);
+    b.innerHTML='<span>'+p.dataset.title+'</span>';
+    b.onclick=()=>go(i);
+    li.appendChild(b);dots.appendChild(li);
+  });
+  const btns=[...dots.querySelectorAll('button')];
+
+  function go(i){
+    i=Math.max(0,Math.min(pages.length-1,i));
+    pages[i].scrollIntoView({behavior:'smooth'});
+  }
+  function mark(i){
+    cur=i;
+    btns.forEach((b,k)=>{b.classList.toggle('on',k===i);b.toggleAttribute('aria-current',k===i)});
+    if(history.replaceState) history.replaceState(null,'','#'+(i+1));
+  }
+
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting) mark(pages.indexOf(e.target))});
+  },{root:box,threshold:.6});
+  pages.forEach(p=>io.observe(p));
+
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+
+  // 휠 한 번에 한 장씩 (트랙패드 관성 무시)
+  let lock=false;
+  box.addEventListener('wheel',e=>{
+    if(Math.abs(e.deltaY)<8) return;
+    e.preventDefault();
+    if(lock) return;
+    lock=true; go(cur+(e.deltaY>0?1:-1));
+    setTimeout(()=>lock=false,850);
+  },{passive:false});
+
+  // 키보드
+  document.addEventListener('keydown',e=>{
+    if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+    else if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    else if(e.key==='Home'){e.preventDefault();go(0)}
+    else if(e.key==='End'){e.preventDefault();go(pages.length-1)}
+  });
+
+  // 주소에 #3 처럼 들어오면 해당 장으로
+  const h=parseInt(location.hash.slice(1),10);
+  if(h>1&&h<=pages.length){box.style.scrollBehavior='auto';pages[h-1].scrollIntoView();box.style.scrollBehavior='';}
+  mark(h>1&&h<=pages.length?h-1:0);
+})();
+</script>
+</body>
+</html>
