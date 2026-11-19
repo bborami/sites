@@ -21,7 +21,7 @@
 <style>
   :root{
     --bg:#0f1115; --fg:#f4f5f7; --muted:#a3a8b3; --line:rgba(255,255,255,.12);
-    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff; --c6:#ff6fae; --c7:#f5b83d;
+    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff; --c6:#ff6fae; --c7:#f5b83d; --c8:#8e7dff;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;background:var(--bg);color:var(--fg);
@@ -109,11 +109,11 @@
     .mock{display:none}
   }
   @media (max-width:640px){
-    .page{padding:40px 48px 40px 22px;align-items:flex-start;padding-top:56px}
-    .grid{grid-template-columns:1fr;gap:10px;margin-top:24px}
-    .card{flex-direction:row;align-items:center;padding:14px 16px;gap:14px}
+    .page{padding:40px 48px 24px 22px;align-items:flex-start;padding-top:40px}
+    .grid{grid-template-columns:1fr;gap:8px;margin-top:20px}
+    .card{flex-direction:row;align-items:center;padding:10px 14px;gap:12px}
     .card p,.card .row button{display:none}
-    .card .ico{width:44px;height:44px;font-size:22px;flex:none}
+    .card .ico{width:38px;height:38px;font-size:20px;flex:none;border-radius:11px}
     .card h3{font-size:16px;flex:1}
     .card .row{display:contents}
     .dots{right:14px;gap:14px}
@@ -121,6 +121,10 @@
     .page.siteview{align-items:center;padding-top:40px}
     .feat li{font-size:14px}
     .scroll-hint{display:none}
+  }
+  @media (max-width:640px) and (max-height:740px){
+    .hero p.lead{display:none}
+    .card{padding:8px 14px}
   }
   @media (prefers-reduced-motion:reduce){.pages{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 </style>
@@ -173,11 +177,17 @@
           <p>생년월일로 만나는 나의 일주 캐릭터</p>
           <div class="row"><button data-go="6">자세히</button><a class="go" href="https://bborami.github.io/saju-health/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
+        <div class="card" style="--accent:var(--c8)">
+          <div class="ico">🐈‍⬛</div>
+          <h3>어둠의 사주</h3>
+          <p>냥선생이 독설로 풀어 주는 만세력</p>
+          <div class="row"><button data-go="7">자세히</button><a class="go" href="https://bborami.github.io/dark-saju/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
         <div class="card" style="--accent:var(--c2)">
           <div class="ico">🏢</div>
           <h3>총무 오피스</h3>
           <p>지금 다들 뭐 하는지 3D 사무실에서 한눈에</p>
-          <div class="row"><button data-go="7">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="8">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
       </div>
     </div>
@@ -366,11 +376,39 @@
     </div>
   </section>
 
-  <!-- 8. 총무 오피스 -->
+  <!-- 8. 어둠의 사주 -->
+  <section class="page siteview" data-title="어둠의 사주" style="--accent:var(--c8)">
+    <div class="inner site">
+      <div>
+        <div class="num">07 · 재미 콘텐츠</div>
+        <h2>어둠의 사주</h2>
+        <span class="tag">냥선생의 독설 만세력</span>
+        <p class="desc">"좋은 말 들으러 왔으면 번지수 틀렸다." 생년월일을 넣으면 고양이 냥선생이 만세력을 뽑고 날카로운 독설로 사주를 풀어 줘요. 재미로 보는 콘텐츠예요.</p>
+        <ul class="feat">
+          <li>생년월일 · 태어난 시간 입력 (시간 몰라도 OK)</li>
+          <li>만세력 원국표와 냥선생의 독설 풀이</li>
+          <li>결과 복사해서 퍼가기, 다른 사람 바로 보기</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/dark-saju/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/dark-saju</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/dark-saju</b></div>
+        <div class="body">
+          <div class="big">🐈‍⬛🌙</div>
+          <div class="tile" style="font-style:italic">"좋은 말 들으러 왔으면 번지수 틀렸다"</div>
+          <div class="tile">📜 만세력 <small>사주 원국표</small></div>
+          <div class="tile" style="background:var(--accent);color:#fff;font-weight:700;justify-content:center">🐾 사주 할퀴기</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 총무 오피스 -->
   <section class="page siteview" data-title="총무 오피스" style="--accent:var(--c2)">
     <div class="inner site">
       <div>
-        <div class="num">07 · 팀 놀이터</div>
+        <div class="num">08 · 팀 놀이터</div>
         <h2>총무 오피스</h2>
         <span class="tag">지금 다들 뭐 하는지 한눈에</span>
         <p class="desc">팀원들의 지금 상태를 3D 사무실로 보여 주는 사이트예요. 상태를 바꾸면 내 캐릭터가 그 구역으로 걸어가요.</p>
