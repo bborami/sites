@@ -21,7 +21,7 @@
 <style>
   :root{
     --bg:#0f1115; --fg:#f4f5f7; --muted:#a3a8b3; --line:rgba(255,255,255,.12);
-    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff; --c6:#ff6fae;
+    --c1:#4f8cff; --c2:#ff9f43; --c3:#ff5d5d; --c4:#2ecc9a; --c5:#a66bff; --c6:#ff6fae; --c7:#f5b83d;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;background:var(--bg);color:var(--fg);
@@ -55,7 +55,7 @@
   .hero h1{font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
   .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p.lead{margin-top:14px;color:var(--muted);font-size:clamp(15px,1.6vw,18px)}
-  .grid{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid{margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   .card{display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:20px;
     background:rgba(255,255,255,.04);border:1px solid var(--line);transition:transform .25s,border-color .25s,background .25s}
   .card:hover{transform:translateY(-6px);border-color:var(--accent);background:rgba(255,255,255,.07)}
@@ -167,11 +167,17 @@
           <p>게임처럼 재밌게 공부하는 보험 자격시험 (내부 교육용)</p>
           <div class="row"><button data-go="5">자세히</button><a class="go" href="https://bborami.github.io/variable-quest-island/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
+        <div class="card" style="--accent:var(--c7)">
+          <div class="ico">🔮</div>
+          <h3>사주와 건강</h3>
+          <p>생년월일로 만나는 나의 일주 캐릭터</p>
+          <div class="row"><button data-go="6">자세히</button><a class="go" href="https://bborami.github.io/saju-health/" target="_blank" rel="noopener">바로가기 →</a></div>
+        </div>
         <div class="card" style="--accent:var(--c2)">
           <div class="ico">🏢</div>
           <h3>총무 오피스</h3>
           <p>지금 다들 뭐 하는지 3D 사무실에서 한눈에</p>
-          <div class="row"><button data-go="6">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
+          <div class="row"><button data-go="7">자세히</button><a class="go" href="https://bborami.github.io/riri-playground/" target="_blank" rel="noopener">바로가기 →</a></div>
         </div>
       </div>
     </div>
@@ -332,11 +338,39 @@
     </div>
   </section>
 
-  <!-- 7. 총무 오피스 -->
+  <!-- 7. 사주와 건강 -->
+  <section class="page siteview" data-title="사주와 건강" style="--accent:var(--c7)">
+    <div class="inner site">
+      <div>
+        <div class="num">06 · 재미 콘텐츠</div>
+        <h2>사주와 건강</h2>
+        <span class="tag">일주로 보는 나의 사주</span>
+        <p class="desc">생년월일을 넣으면 내 일주(日柱) 캐릭터를 보여 주는 사주 콘텐츠예요. 오행 이론을 바탕으로 가볍게 즐기는 재미용 콘텐츠예요.</p>
+        <ul class="feat">
+          <li>성별 · 양력/음력 · 평달/윤달 선택</li>
+          <li>이름과 생년월일 입력, 출생시간 몰라도 OK</li>
+          <li>버튼 한 번으로 나의 일주 캐릭터 보기</li>
+        </ul>
+        <a class="btn" href="https://bborami.github.io/saju-health/" target="_blank" rel="noopener">사이트 바로가기 →</a>
+        <div class="url">bborami.github.io/saju-health</div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i><b>bborami.github.io/saju-health</b></div>
+        <div class="body">
+          <div class="big">🔮🌳🔥</div>
+          <div class="chips"><span class="on">남자</span><span>여자</span><span class="on">양력</span><span>음력</span></div>
+          <div class="tile">📅 생년월일 <small>출생시간 모름</small></div>
+          <div class="tile" style="background:var(--accent);color:#1a1300;font-weight:700;justify-content:center">내 일주 캐릭터 보기</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 총무 오피스 -->
   <section class="page siteview" data-title="총무 오피스" style="--accent:var(--c2)">
     <div class="inner site">
       <div>
-        <div class="num">06 · 팀 놀이터</div>
+        <div class="num">07 · 팀 놀이터</div>
         <h2>총무 오피스</h2>
         <span class="tag">지금 다들 뭐 하는지 한눈에</span>
         <p class="desc">팀원들의 지금 상태를 3D 사무실로 보여 주는 사이트예요. 상태를 바꾸면 내 캐릭터가 그 구역으로 걸어가요.</p>
